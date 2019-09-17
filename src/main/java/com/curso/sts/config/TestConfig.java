@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Profile;
 import com.curso.sts.entities.Category;
 import com.curso.sts.entities.Order;
 import com.curso.sts.entities.OrderItem;
+import com.curso.sts.entities.Payment;
 import com.curso.sts.entities.Product;
 import com.curso.sts.entities.User;
 import com.curso.sts.entities.enums.OrderStatus;
@@ -79,6 +80,13 @@ public class TestConfig implements CommandLineRunner{
 		OrderItem oi4 = new OrderItem(o3, p5, 2, p5.getPrice());
 		
 		orderItemRepository.saveAll(Arrays.asList(oi1, oi2, oi3, oi4));
+		
+		Payment pay1 = new Payment(null, Instant.parse("2019-06-20T21:53:07Z"), o1);
+		//para salvar um obj dependente de 1 pra 1, não precisa chamar o repo do proprio
+		o1.setPayment(pay1);
+		//salvar novamente o pedido
+		orderRepository.save(o1);
+		
 	}
 
 	
